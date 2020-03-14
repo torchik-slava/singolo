@@ -596,7 +596,8 @@ a {
 	resize: none;
 }
 
-.contact-form__button {
+.contact-form__button,
+.modal-window__button {
 	width: 100px;
 	background-color: #f0d8d9;
 	border: 1px solid #d6564f;
@@ -604,7 +605,8 @@ a {
 	transition: all 1s;
 }
 
-.contact-form__button:hover {
+.contact-form__button:hover,
+.modal-window__button:hover {
 	background-color: #ffffff;
 }
 
@@ -663,4 +665,57 @@ a {
 .copyright {
   line-height: 3.2rem;
   letter-spacing: -0.2px;
+}
+
+/* MODAL WINDOW */
+
+.overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(197,197,197,0.7);
+  z-index: 10;
+}
+
+.modal-window {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-flow: column;
+  padding: 20px;
+  min-width: 30%;
+  max-width: 60%;
+  min-height: 30%;
+  font-size: 2rem;
+  background-color: #f2f2f2;
+  border: 2px solid #d6564f;
+  border-radius: 10px;
+}
+
+.modal-window__header {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #666d89;
+}
+
+.modal-window__subject,
+.modal-window__comments {
+  align-self: flex-start;
+  font-size: 1.8rem;
+  line-height: 3.0rem;
+  font-weight: 300;
+  color: #767e9e;
+  white-space: pre-wrap;
+}
+
+.modal-window__button {
+  height: 50px;
+  font-size: 1.5rem;
+  color: #f48c8f;
+  border-radius: 5px;
 }

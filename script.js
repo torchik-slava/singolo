@@ -37,6 +37,32 @@ GALLERY.addEventListener('click', (e) => {
   e.target.style.outline = '5px solid #f06c64';
 });
 
+// FORM
+
+const FORM = document.querySelector('.contact-form');
+FORM.addEventListener('submit', submitFormHandler);
+
+function submitFormHandler (e) {
+  e.preventDefault();
+  displayModal();
+  fillModal();
+  document.querySelector('.modal-window__button').addEventListener('click', removeModal);
+}
+
+function fillModal () {
+  if (FORM.subject.value) document.querySelector('.modal-window__subject').textContent = 'Subject: ' + FORM.subject.value;
+  if (FORM.comments.value) document.querySelector('.modal-window__comments').textContent = 'Description: ' + FORM.comments.value;
+}
+
+function displayModal () {
+  document.body.append(template.content.cloneNode(true));
+}
+
+function removeModal (e) {
+  e.target.closest('.overlay').remove();
+  FORM.reset();
+}
+
 // SLIDER
 
 const SLIDER_SECTION = document.querySelector('.slider');
