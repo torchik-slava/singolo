@@ -23,10 +23,19 @@
 		<main>
 			<h1 class="hidden-h1">Singolo</h1>
 			<section class="slider">
-				<button class="slider__button"></button>
-				<div class="slider__item"><img src="asserts/img/base.png" width="215" height="458" alt="mobile phone"></div>
-				<div class="slider__item slider__item_turned"><img src="asserts/img/base.png" width="215" height="458" alt="mobile phone"></div>
-				<button class="slider__button slider__button_next"></button>
+				<button class="slider__button" id="prevBtn"></button>
+				<div class="slider__frame">
+					<div class="slide slide1"  data-bg-color="#f06c64" data-border-color="#ea676b">
+						<div class="slide__item slide1__item"><img class="mobile-phone" src="asserts/img/base.png" width="215" height="458" alt="mobile phone"><div class="mobile-screen-on"></div></div>
+						<div class="slide__item slide1__item slide1__item_turned"><img class="mobile-phone" src="asserts/img/base.png" width="215" height="458" alt="mobile phone"><div class="mobile-screen-on"></div></div>
+					</div>
+					<div class="slide slide2" data-bg-color="#648bf0" data-border-color="#5e86f7">
+            <div class="slide__item slide2__item_small"><img class="mobile-phone" src="asserts/img/iphone.svg" alt="mobile phone"><div class="mobile-screen-on"></div></div>
+            <div class="slide__item slide2__item_big"><img class="mobile-phone" src="asserts/img/iphone.svg" width="229" height="486" alt="mobile phone"><div class="mobile-screen-on"></div></div>
+            <div class="slide__item slide2__item_small"><img class="mobile-phone" src="asserts/img/iphone.svg" alt="mobile phone"><div class="mobile-screen-on"></div></div>
+          </div>
+				</div>
+				<button class="slider__button slider__button_next" id="nextBtn"></button>
 			</section>
 			<section class="services" id="services">
 				<h2 class="section-headline">Our Services</h2>
