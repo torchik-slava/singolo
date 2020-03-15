@@ -315,7 +315,6 @@ a {
 
 .services__item {
 	display: flex;
-	flex-wrap: row wrap;
 	justify-content: space-between;
   width: 32%;
   overflow: hidden;
@@ -432,7 +431,8 @@ a {
 
 .portfolio__pic {
 	width: 220px;
-	height: 187px;
+  height: 187px;
+  cursor: pointer;
 }
 
 .portfolio__pic:nth-child(n+13) {
