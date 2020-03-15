@@ -70,8 +70,7 @@ const SLIDER_FRAME = document.querySelector('.slider__frame');
 
 let slides
 createNewStructure();
-const FIRST = 0, LAST = slides.length-1;
-let current = FIRST, next = FIRST + 1, prev = LAST;
+let current = 0, next = 1, prev = slides.length-1;
 initNewStructure();
 
 nextBtn.addEventListener('click', buttonHandler);
@@ -91,41 +90,28 @@ function createNewStructure () {
 
 function initNewStructure () {
   slides.forEach(slide => slide.remove());
-  rearrangeSlides();
-  useStyles();
+  setNewMargins();
+  useColorStyles();
   SLIDER_FRAME.append(slides[prev], slides[current], slides[next]);
 }
 
-function rearrangeSlides () {
+function setNewMargins () {
   slides[prev].classList.add('slide_prev');
   slides[current].classList.add('slide_current');
   slides[next].classList.add('slide_next');
 }
 
-function useStyles () {
+function useColorStyles () {
   SLIDER_SECTION.style.backgroundColor = slides[current].dataset.bgColor;
   SLIDER_SECTION.style.borderColor = slides[current].dataset.borderColor;
 }
 
 function buttonHandler (e) {
   disableButton(e);
-  cancelArrangement();
-  if(e.target === nextBtn) {
-    slides[prev].remove();
-    prev == LAST ? prev = FIRST : prev++ ;
-    current == LAST ? current = FIRST : current++ ;
-    next == LAST ? next = FIRST : next++;
-    SLIDER_FRAME.append(slides[next]);
-
-  } else {
-    slides[next].remove();
-    prev == FIRST ? prev = LAST : prev-- ;
-    current == FIRST ? current = LAST : current-- ;
-    next == FIRST ? next = LAST : next--;
-    SLIDER_FRAME.prepend(slides[prev]);
-  }
-  rearrangeSlides();
-  useStyles();
+  cancelMargins();
+  handleCertainButton(e);
+  setNewMargins();
+  useColorStyles();
   switchOnMobiles();
 }
 
@@ -138,12 +124,30 @@ function disableButton (e) {
   }, 1000);
 }
 
-function cancelArrangement () {
+function cancelMargins () {
   slides.forEach(slide => slide.classList.remove('slide_prev', 'slide_current', 'slide_next'));
+}
+
+function handleCertainButton (e) {
+  if(e.target === nextBtn) {
+    slides[prev].remove();
+    calcNewMargins(1);
+    SLIDER_FRAME.append(slides[next]);
+  } else {
+    slides[next].remove();
+    calcNewMargins(-1);
+    SLIDER_FRAME.prepend(slides[prev]);
+  }
 }
 
 function switchOnMobiles () {
   [...slides[current].children].forEach(mobile => mobile.children[1].classList.remove('hidden'));
+}
+
+function calcNewMargins (change) {
+  prev = (prev + change + slides.length) % slides.length;
+  current = (current + change + slides.length) % slides.length;
+  next = (next + change + slides.length) % slides.length;
 }
 
 function handlePhones (e) {
@@ -154,12 +158,3 @@ function handlePhones (e) {
     e.target.nextSibling.classList.toggle('hidden');
   }
 }
-
-
-
-
-
-
-
-
-
