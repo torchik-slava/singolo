@@ -1,46 +1,50 @@
 // HEADER
 
-const LOC_HASH = document.location.hash;
-const LOGO = document.querySelector('.logo');
-const HEADER_NAV = document.querySelector('.header__navigation ul');
-const NAV_ITEMS = [...HEADER_NAV.querySelectorAll('li')];
+document.addEventListener('scroll', scrollHandler);
 
-NAV_ITEMS.forEach(item => {
-  if(item.children[0].getAttribute('href') == LOC_HASH) item.classList.add('navigation__item_current');
-});
-
-LOGO.addEventListener('click', () => {
-  NAV_ITEMS.forEach(item => item.classList.remove('navigation__item_current'));
-  NAV_ITEMS[0].classList.add('navigation__item_current');
-});
-
-HEADER_NAV.addEventListener('click', (e) => {
-  NAV_ITEMS.forEach(item => item.classList.remove('navigation__item_current'));
-  e.target.closest('li').classList.add('navigation__item_current');
-});
+function scrollHandler (e) {
+  const html = document.documentElement;
+  const nav_items = [...html.querySelectorAll('.header__navigation li')];
+  if(Math.ceil(html.scrollHeight - html.scrollTop) == html.clientHeight) {
+    nav_items.forEach(item => item.classList.remove('navigation__item_current'));
+    nav_items[nav_items.length - 1].classList.add('navigation__item_current');
+    return;
+  }
+  const from_top = window.scrollY;
+  nav_items.forEach((item) => {
+    let section = document.querySelector(item.children[0].hash);
+    if (section.offsetTop - header.offsetHeight <= from_top && (section.offsetTop - header.offsetHeight + section.offsetHeight) > from_top) {
+      item.classList.add('navigation__item_current');
+    } else {
+      item.classList.remove('navigation__item_current');
+    }
+  });
+}
 
 // PORTFOLIO
 
-const TAGS_MENU = document.querySelector('.tags');
-const TAGS = [...TAGS_MENU.querySelectorAll('.tags__item')];
-const GALLERY = document.querySelector('.portfolio .layout-4-col');
-const PICS = [...GALLERY.querySelectorAll('.portfolio__pic')];
+const tags_menu = document.querySelector('.tags');
+const tags = [...tags_menu.querySelectorAll('.tags__item')];
+const gallery = document.querySelector('.portfolio .layout-4-col');
+const pics = [...gallery.querySelectorAll('.portfolio__pic')];
 
-TAGS_MENU.addEventListener('click', (e) => {
-  TAGS.forEach(tag => tag.classList.remove('tags__item_active'));
+tags_menu.addEventListener('click', (e) => {
+  if (e.target.classList.contains('tags__item_active') || !e.target.classList.contains('tags__item')) return;
+  tags.forEach(tag => tag.classList.remove('tags__item_active'));
   e.target.classList.add('tags__item_active');
-  PICS.forEach(pic => pic.style.order = Math.floor((Math.random()*PICS.length)).toString());
+  pics.forEach(pic => pic.style.order = Math.floor((Math.random()*pics.length)).toString());
 });
 
-GALLERY.addEventListener('click', (e) => {
-  PICS.forEach(pic => pic.children[0].style.outline = '');
+gallery.addEventListener('click', (e) => {
+  if (e.target.nodeName != 'IMG' || e.target.getAttribute('outline') != null) return;
+  pics.forEach(pic => pic.children[0].style.outline = '');
   e.target.style.outline = '5px solid #f06c64';
 });
 
 // FORM
 
-const FORM = document.querySelector('.contact-form');
-FORM.addEventListener('submit', submitFormHandler);
+const form = document.querySelector('.contact-form');
+form.addEventListener('submit', submitFormHandler);
 
 function submitFormHandler (e) {
   e.preventDefault();
@@ -50,8 +54,8 @@ function submitFormHandler (e) {
 }
 
 function fillModal () {
-  if (FORM.subject.value) document.querySelector('.modal-window__subject').textContent = 'Subject: ' + FORM.subject.value;
-  if (FORM.comments.value) document.querySelector('.modal-window__comments').textContent = 'Description: ' + FORM.comments.value;
+  if (form.subject.value) document.querySelector('.modal-window__subject').textContent = 'Subject: ' + form.subject.value;
+  if (form.comments.value) document.querySelector('.modal-window__comments').textContent = 'Description: ' + form.comments.value;
 }
 
 function displayModal () {
@@ -60,13 +64,13 @@ function displayModal () {
 
 function removeModal (e) {
   e.target.closest('.overlay').remove();
-  FORM.reset();
+  form.reset();
 }
 
 // SLIDER
 
-const SLIDER_SECTION = document.querySelector('.slider');
-const SLIDER_FRAME = document.querySelector('.slider__frame');
+const slider_section = document.querySelector('.slider');
+const slider_frame = document.querySelector('.slider__frame');
 
 let slides
 createNewStructure();
@@ -75,14 +79,14 @@ initNewStructure();
 
 nextBtn.addEventListener('click', buttonHandler);
 prevBtn.addEventListener('click', buttonHandler);
-SLIDER_FRAME.addEventListener('click', handlePhones);
+slider_frame.addEventListener('click', handlePhones);
 
 function createNewStructure () {
-  if (SLIDER_FRAME.children.length > 2) {
-    slides = [...SLIDER_FRAME.children];
+  if (slider_frame.children.length > 2) {
+    slides = [...slider_frame.children];
   } else {
-    slides = [...SLIDER_FRAME.children];
-    [...SLIDER_FRAME.children].forEach(item => {
+    slides = [...slider_frame.children];
+    [...slider_frame.children].forEach(item => {
       slides.push(item.cloneNode(true));
     });
   }
@@ -92,7 +96,7 @@ function initNewStructure () {
   slides.forEach(slide => slide.remove());
   setNewMargins();
   useColorStyles();
-  SLIDER_FRAME.append(slides[prev], slides[current], slides[next]);
+  slider_frame.append(slides[prev], slides[current], slides[next]);
 }
 
 function setNewMargins () {
@@ -102,8 +106,10 @@ function setNewMargins () {
 }
 
 function useColorStyles () {
-  SLIDER_SECTION.style.backgroundColor = slides[current].dataset.bgColor;
-  SLIDER_SECTION.style.borderColor = slides[current].dataset.borderColor;
+  slider_section.style.backgroundColor = slides[current].dataset.bgColor;
+  slider_section.style.borderColor = slides[current].dataset.borderColor;
+  prevBtn.className = 'slider__button ' + slides[current].dataset.btnClass;
+  nextBtn.className = 'slider__button slider__button_next ' + slides[current].dataset.btnClass;
 }
 
 function buttonHandler (e) {
@@ -132,11 +138,11 @@ function handleCertainButton (e) {
   if(e.target === nextBtn) {
     slides[prev].remove();
     calcNewMargins(1);
-    SLIDER_FRAME.append(slides[next]);
+    slider_frame.append(slides[next]);
   } else {
     slides[next].remove();
     calcNewMargins(-1);
-    SLIDER_FRAME.prepend(slides[prev]);
+    slider_frame.prepend(slides[prev]);
   }
 }
 
