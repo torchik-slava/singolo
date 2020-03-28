@@ -39,7 +39,6 @@ function removeMenu (e) {
   }
 }
 
-
 // PORTFOLIO
 
 const tags_menu = document.querySelector('.tags');
@@ -47,18 +46,21 @@ const tags = [...tags_menu.querySelectorAll('.tags__item')];
 const gallery = document.querySelector('.portfolio .layout-4-col');
 const pics = [...gallery.querySelectorAll('.portfolio__pic')];
 
-tags_menu.addEventListener('click', (e) => {
+tags_menu.addEventListener('click', tagClickHandler);
+gallery.addEventListener('click', highlightPicture);
+
+function tagClickHandler (e) {
   if (e.target.classList.contains('tags__item_active') || !e.target.classList.contains('tags__item')) return;
   tags.forEach(tag => tag.classList.remove('tags__item_active'));
   e.target.classList.add('tags__item_active');
   mixPictures();
-});
+}
 
-gallery.addEventListener('click', (e) => {
+function highlightPicture (e) {
   if (e.target.nodeName != 'IMG' || e.target.getAttribute('outline') != null) return;
   pics.forEach(pic => pic.children[0].style.outline = '');
   e.target.style.outline = '5px solid #f06c64';
-});
+}
 
 function mixPictures () {
   pics.forEach(pic => pic.remove());
