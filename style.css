@@ -965,8 +965,13 @@ a {
   }
 
   .logo {
-    margin-left: 30.75%;
+    margin-left: calc((100% - 2.5rem - 9.2rem) * 0.472477);
     transition: all 1s;
+  }
+
+  .logo__text,
+  .logo__star {
+    font-size: 2rem;
   }
 
   .logo_sticked {
