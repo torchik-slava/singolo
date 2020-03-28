@@ -1,6 +1,9 @@
 // HEADER
 
 document.addEventListener('scroll', scrollHandler);
+const hamburger_menu  = document.querySelector('.hamburger-btn');
+hamburger_menu.addEventListener('click', toggleMenu);
+document.addEventListener('click', removeMenu);
 
 function scrollHandler (e) {
   const html = document.documentElement;
@@ -20,6 +23,22 @@ function scrollHandler (e) {
     }
   });
 }
+
+function toggleMenu (e) {
+  const header_nav  = document.querySelector('.header__navigation');
+  const logo = document.querySelector('.logo');
+  hamburger_menu.classList.toggle('hamburger-btn_turned');
+  header_nav.classList.toggle('header__navigation_active');
+  logo.classList.toggle('logo_sticked');
+}
+
+function removeMenu (e) {
+  if(!hamburger_menu.classList.contains('hamburger-btn_turned')) return;
+  if(e.target.classList.contains('navigation__link') || !e.target.closest('header')) {
+   toggleMenu();
+  }
+}
+
 
 // PORTFOLIO
 
