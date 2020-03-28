@@ -627,7 +627,7 @@ a {
 .contact-form__area {
   margin-bottom: 13px;
   padding-top: 7px;
-	height: 202px;
+	height: 168px;
 	resize: none;
 }
 
@@ -856,10 +856,6 @@ a {
     margin-bottom: 13px;
   }
 
-  .contact-form__area {
-    height: 168px;
-  }
-
   .contact-form__button {
     margin-bottom: 39px;
   }
@@ -1037,8 +1033,8 @@ a {
   }
 
   .portfolio__pic {
-    width: calc((100% - 1.3rem) / 2);
-    margin-bottom: 13px;
+    width: calc((100% - 1.4rem) / 2);
+    margin-bottom: 14px;
   }
 
   .portfolio__pic:nth-child(n+9) {
