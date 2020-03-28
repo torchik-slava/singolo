@@ -51,7 +51,7 @@ tags_menu.addEventListener('click', (e) => {
   if (e.target.classList.contains('tags__item_active') || !e.target.classList.contains('tags__item')) return;
   tags.forEach(tag => tag.classList.remove('tags__item_active'));
   e.target.classList.add('tags__item_active');
-  pics.forEach(pic => pic.style.order = Math.floor((Math.random()*pics.length)).toString());
+  mixPictures();
 });
 
 gallery.addEventListener('click', (e) => {
@@ -59,6 +59,13 @@ gallery.addEventListener('click', (e) => {
   pics.forEach(pic => pic.children[0].style.outline = '');
   e.target.style.outline = '5px solid #f06c64';
 });
+
+function mixPictures () {
+  pics.forEach(pic => pic.remove());
+  pics.push(pics.shift());
+  const picsContainer = document.querySelector('.portfolio .layout-4-col');
+  pics.forEach(pic => picsContainer.append(pic));
+}
 
 // FORM
 
